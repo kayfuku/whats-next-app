@@ -1,4 +1,4 @@
-Side Project
+What's Next App
 ============
 Kei Fukutani
 
