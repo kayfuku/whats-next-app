@@ -83,7 +83,7 @@ public class TextAnalyzer {
 		String word;
 		for (int i = 0; i < words.length; i++) {
 			// Removes non-alphanumeric characters. 
-			word = words[i].replaceAll("[^A-Za-z0-9]", "");
+			word = words[i].replaceAll("[^A-Za-z0-9']", "");
 			word = word.toLowerCase();
 			words[i] = word;
 		}

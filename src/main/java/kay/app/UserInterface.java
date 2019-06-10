@@ -234,7 +234,7 @@ public class UserInterface implements Runnable {
 			String word = textField.getText().trim().toLowerCase();
 
 			if (!word.equals("")) {
-				String result = nextWordsHolder.buildResult(word, 10);
+				String result = nextWordsHolder.buildResult(word, 100);
 
 				result += "\n\nTotal number of next words for word '" + word + "': " + nextWordsHolder.getSum() + "\n";
 				result += "\nTotal number of words as keys: " + nextWordsHolder.getWordToCountMapSize() + "\n";

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class NextWordsHolder {
 	
-	// Key: word, Value: (Key: next word, Value: count) 
+	// Key: word, Value: Map (Key: next word, Value: count) 
 	private HashMap<String, HashMap<String, Integer>> wordToCountMap;
 	private int sum;
 	
