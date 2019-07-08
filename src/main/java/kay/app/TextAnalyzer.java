@@ -9,8 +9,9 @@ import java.util.HashMap;
  */
 public class TextAnalyzer {
 	
+	// This data structure is also held in NextWordsHolder. 
     private HashMap<String, HashMap<String, Integer>> wordToCountMap;
-	private String lastWord = null;
+	private String lastWord = null;	
 	
 	
 	public TextAnalyzer(HashMap<String, HashMap<String, Integer>> wordToCountMap) {
@@ -24,7 +25,7 @@ public class TextAnalyzer {
 	 * @param line  the input text
 	 * @return
 	 */
-	public HashMap<String, HashMap<String, Integer>> makeNextWordsCountMap(String line) {
+	public void makeNextWordsCountMap(String line) {
 		
 		String[] words = preprocessText(line);
 		
@@ -34,16 +35,14 @@ public class TextAnalyzer {
 		
 		String word = "";
 		String nextWord = "";
-		for (int i = 0; i < words.length - 1; i++) {
+		for (int i = 0; i + 1 < words.length; i++) {
 			word = words[i];
 			nextWord = words[i + 1];
 			
 			countNextWords(word, nextWord);
 		}
 		
-		lastWord = words[words.length - 1];
-		
-		return wordToCountMap;
+		lastWord = words[words.length - 1];		
 	}
 	
 	
@@ -62,11 +61,7 @@ public class TextAnalyzer {
 			wordToCountMap.put(word, nextWordToCount);
 		} else {
 			HashMap<String, Integer> nextWordToCount = wordToCountMap.get(word);
-			if (!nextWordToCount.containsKey(nextWord)) {
-				nextWordToCount.put(nextWord, 1);
-			} else {
-				nextWordToCount.put(nextWord, nextWordToCount.get(nextWord) + 1);
-			}
+			nextWordToCount.put(nextWord, nextWordToCount.getOrDefault(nextWord, 0) + 1);
 			wordToCountMap.put(word, nextWordToCount);
 		}
 	}

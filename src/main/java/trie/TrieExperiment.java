@@ -2,9 +2,7 @@ package trie;
 
 public class TrieExperiment {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+	public static void main(String[] args) {		
 		
 		String[] strs = new String[]{ "leet", "leed", "le", "let" };
         System.out.println(longestCommonPrefix5(strs));
@@ -202,13 +200,13 @@ class Trie {
     
     
     // Print suggestions for given query prefix. 
-    private String query = "";
+//    private String query = "";
     public int printAutoSuggestions(TrieNode root, String query) {
     	if (query.isEmpty()) {
     		System.out.println("Enter a non-empty string.");
 			return 0;
 		}
-    	this.query = query;
+//    	this.query = query;
     	
     	// Get the last node of the query. 
     	TrieNode lastNode = this.getLastNode(query);
@@ -226,8 +224,9 @@ class Trie {
 		}
     	
     	if (lastNode.getNumChild() != 0) {
-//    		StringBuilder prefix = new StringBuilder(query);
-    		suggestionsRecur(lastNode, "");
+//    		suggestionsRecur(lastNode, "");
+    		StringBuilder prefix = new StringBuilder(query);
+            suggestionsRecur(lastNode, prefix);
 		}
     	
 		return 1;
@@ -235,9 +234,11 @@ class Trie {
 
     // Print auto-suggestions for given prefix. 
     // @param node  the last node in the prefix. 
-	private void suggestionsRecur(TrieNode node, String curPrefix) {
+//	private void suggestionsRecur(TrieNode node, String curPrefix) {
+    private void suggestionsRecur(TrieNode node, StringBuilder prefix) {
 		if (node.isEnd()) {
-			System.out.println(query + curPrefix);
+//			System.out.println(query + curPrefix);
+            System.out.println(prefix.toString());
 			// Don't return here. because there might be a child node ahead. 
 //			return; // NG!
 		}
@@ -251,7 +252,11 @@ class Trie {
 			if (node.containsKey(c)) {	
 //				curPrefix += c; // NG!
 //				node = node.get(c); // NG!
-				suggestionsRecur(node.get(c), curPrefix + c);
+				StringBuilder curPrefix = new StringBuilder(prefix);
+                curPrefix.append(c);
+//				suggestionsRecur(node.get(c), curPrefix + c);
+                suggestionsRecur(node.get(c), curPrefix);
+
 			}	
 		}
 	}

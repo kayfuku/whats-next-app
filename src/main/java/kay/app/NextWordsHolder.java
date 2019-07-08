@@ -37,17 +37,7 @@ public class NextWordsHolder {
 	public int getWordToCountMapSize() {
 		return wordToCountMap.size();
 	}
-	
-	
-	/**
-	 * Takes the wordToCountMap built up. 
-	 * @param line
-	 * @param textAnalyzer
-	 */
-	public void storeData(HashMap<String, HashMap<String, Integer>> wordToCountMap) {
-		this.wordToCountMap = wordToCountMap;
-	}
-	
+		
 	
 	/**
 	 * Builds the result list using StringBuffer to display it on the JLabel object. 

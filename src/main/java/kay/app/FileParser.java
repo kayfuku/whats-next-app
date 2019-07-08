@@ -69,16 +69,14 @@ public class FileParser {
 
 			String line;
 			TextAnalyzer textAnalyzer = new TextAnalyzer(nextWordsHolder.getWordToCountMap());
+			
 			int numObject = 0;
-
 			while ((line = reader.readLine()) != null) {
 				
 				// Stores data.
 				line = line.trim();
 				if (!line.trim().equals("")) {
-					HashMap<String, HashMap<String, Integer>> wordToCountMap = 
-							textAnalyzer.makeNextWordsCountMap(line);
-					nextWordsHolder.storeData(wordToCountMap);
+					textAnalyzer.makeNextWordsCountMap(line);
 				}				
 				
 				if (numObject % 1000 == 0) {
