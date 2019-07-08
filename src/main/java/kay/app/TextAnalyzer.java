@@ -1,6 +1,9 @@
 package kay.app;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -11,11 +14,18 @@ public class TextAnalyzer {
 	
 	// This data structure is also held in NextWordsHolder. 
     private HashMap<String, HashMap<String, Integer>> wordToCountMap;
-	private String lastWord = null;	
+	private String lastWord = null;
+	
+	// For phrases. 
+	private PhrasesTrie phrasesTrie;
+	private int NUM_WORDS = 3;
+	private List<List<String>> phrasesFragmentsLast;
+	private List<List<String>> phrasesFragmentsFirst;
 	
 	
-	public TextAnalyzer(HashMap<String, HashMap<String, Integer>> wordToCountMap) {
+	public TextAnalyzer(HashMap<String, HashMap<String, Integer>> wordToCountMap, PhrasesTrie phrasesTrie) {
 		this.wordToCountMap = wordToCountMap;
+		this.phrasesTrie = phrasesTrie;
 	}
 	
 	
@@ -23,7 +33,6 @@ public class TextAnalyzer {
 	 * Splits the line, counts the number of the next words, and make the wordToCountMap. 
 	 * Also, it handles with the last word of the line. 
 	 * @param line  the input text
-	 * @return
 	 */
 	public void makeNextWordsCountMap(String line) {
 		
@@ -65,6 +74,41 @@ public class TextAnalyzer {
 			wordToCountMap.put(word, nextWordToCount);
 		}
 	}
+	
+	
+	/**
+	 * For phrases, build a trie. 
+	 * @param line  the input text
+	 */
+	public void buildTrie(String line) {
+		String[] words = line.split("\\s+");
+		
+
+		for (int i = 0; i + NUM_WORDS <= words.length; i++) {
+			String[] phrase = Arrays.copyOfRange(words, i, i + NUM_WORDS);
+			phrasesTrie.insertPhrase(phrase);
+//			System.out.println(Arrays.toString(phrase));
+		}
+		
+		// Handle fragments of a phrase. 
+		phrasesFragmentsLast = new ArrayList<>();
+		for (int i = words.length - NUM_WORDS + 1; i < words.length; i++) {
+			
+			makeTempFragment(i, words);
+		}
+		
+		
+	}
+	
+	private void makeTempFragment(int i, String[] words) {
+		List<String> fragments = new ArrayList<>(words.length - i);
+		phrasesFragmentsLast.add(fragments);		
+		for (List<String> frags : phrasesFragmentsLast) {
+			frags.add(words[i]);
+		}
+	}
+	
+	
 	
 
 	/**

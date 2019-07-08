@@ -20,11 +20,13 @@ import kay.app.UserInterface.MyPanel;
 public class FileParser {
 	
 	private NextWordsHolder nextWordsHolder;
+	private PhrasesTrie phrasesTrie;
 	private volatile boolean finishedReading = false;
 	
 	
-	public FileParser(NextWordsHolder nextWordsHolder) {
+	public FileParser(NextWordsHolder nextWordsHolder, PhrasesTrie phrasesTrie) {
 		this.nextWordsHolder = nextWordsHolder;
+		this.phrasesTrie = phrasesTrie;
 	}
 	public boolean getFinishedReading() {
 		return finishedReading;
@@ -68,7 +70,7 @@ public class FileParser {
 		try (BufferedReader reader = Files.newBufferedReader(inputFilePath, charset)) {
 
 			String line;
-			TextAnalyzer textAnalyzer = new TextAnalyzer(nextWordsHolder.getWordToCountMap());
+			TextAnalyzer textAnalyzer = new TextAnalyzer(nextWordsHolder.getWordToCountMap(), phrasesTrie);
 			
 			int numObject = 0;
 			while ((line = reader.readLine()) != null) {
@@ -76,7 +78,8 @@ public class FileParser {
 				// Stores data.
 				line = line.trim();
 				if (!line.trim().equals("")) {
-					textAnalyzer.makeNextWordsCountMap(line);
+//					textAnalyzer.makeNextWordsCountMap(line);
+					textAnalyzer.buildTrie(line);
 				}				
 				
 				if (numObject % 1000 == 0) {

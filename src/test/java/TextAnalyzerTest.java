@@ -12,8 +12,10 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.omg.CORBA.PrincipalHolder;
 
 import kay.app.NextWordsHolder;
+import kay.app.PhrasesTrie;
 import kay.app.TextAnalyzer;
 
 public class TextAnalyzerTest {
@@ -29,7 +31,8 @@ public class TextAnalyzerTest {
 	public void setUp() throws Exception {
 		
 		NextWordsHolder nextWordsHolder = new NextWordsHolder();
-		textAnalyzer = new TextAnalyzer(nextWordsHolder.getWordToCountMap());
+		PhrasesTrie phrasesTrie = new PhrasesTrie();
+		textAnalyzer = new TextAnalyzer(nextWordsHolder.getWordToCountMap(), phrasesTrie);
 		methodPreprocessText = TextAnalyzer.class.getDeclaredMethod("preprocessText", String.class);
 		methodPreprocessText.setAccessible(true);
 		methodCountNextWords = TextAnalyzer.class.getDeclaredMethod("countNextWords", String.class, String.class);

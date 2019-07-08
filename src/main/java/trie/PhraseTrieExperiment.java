@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 public class PhraseTrieExperiment {
+	
+	private static List<List<String>> phrasesFragmentsLast;
+	private static List<List<String>> phrasesFragmentsFirst;
+	private static PhraseTrie trie;
+	private static int NUM_WORDS = 3;
+
 
 	public static void main(String[] args) {		
 
@@ -24,17 +30,17 @@ public class PhraseTrieExperiment {
 			phraseTrie.insertPhrase(phrase);
 			System.out.println(Arrays.toString(phrase));
 		}
-//		[aa, bb, cc]
-//		[bb, cc, dd]
-//		[cc, dd, ee]
-//		[dd, ee, bb]
-//		[ee, bb, cc]
-//		[bb, cc, ff]
-//		[cc, ff, bb]
-//		[ff, bb, cc]
-//		[bb, cc, ff]
-//		[cc, ff, ee]
-//		[ff, ee, gg]		
+		//		[aa, bb, cc]
+		//		[bb, cc, dd]
+		//		[cc, dd, ee]
+		//		[dd, ee, bb]
+		//		[ee, bb, cc]
+		//		[bb, cc, ff]
+		//		[cc, ff, bb]
+		//		[ff, bb, cc]
+		//		[bb, cc, ff]
+		//		[cc, ff, ee]
+		//		[ff, ee, gg]		
 		System.out.println("Phrases inserted!");
 		System.out.println();
 
@@ -49,16 +55,32 @@ public class PhraseTrieExperiment {
 
 		// Test printAutoSuggestions(). 
 		String[] prefix = new String[]{ "bb" };
-		phraseTrie.printAutoSuggestions(phraseTrie.root, prefix);
+		phraseTrie.printAutoSuggestions(prefix);
 		//		[bb, cc, ff] 2
 		//		[bb, cc, dd] 1
 		prefix = new String[]{ "ac" };
-		phraseTrie.printAutoSuggestions(phraseTrie.root, prefix); // No phrase found.
+		phraseTrie.printAutoSuggestions(prefix); // No phrase found.
 		System.out.println();
 
 
-
-
+		// Test handling fragments. 
+		trie = new PhraseTrie();
+		line = "aa bb cc dd ee ff gg hh ii";
+		buildTrie(line);
+		for (List<String> frags : phrasesFragmentsLast) {
+			System.out.println(frags);
+		}
+		line = "jj kk ll mm nn oo pp qq rr";
+		buildTrie(line);
+		for (List<String> frags : phrasesFragmentsFirst) {
+			System.out.println(frags);
+		}
+		prefix = new String[]{ "gg" };
+		trie.printAutoSuggestions(prefix);
+		prefix = new String[]{ "hh" };
+		trie.printAutoSuggestions(prefix);
+		prefix = new String[]{ "ii" };
+		trie.printAutoSuggestions(prefix);
 
 		
 
@@ -66,7 +88,65 @@ public class PhraseTrieExperiment {
 
 
 	}	
+	
+	
+	public static void buildTrie(String line) {
+		String[] words = line.split("\\s+");
+		
+		// Handle fragments of a phrase. 
+		// Concatenate the fragments between the end of the previous line and 
+		// the beginning of this line. 
+		if (phrasesFragmentsLast != null) {
+			phrasesFragmentsFirst = new ArrayList<>();
+			for (int i = 0; i < NUM_WORDS - 1; i++) {
+				List<String> fragments = new ArrayList<>();
+				phrasesFragmentsFirst.add(fragments);
+			}
+			for (int i = 0; i < phrasesFragmentsFirst.size(); i++) {
+			    for (int j = 0; j <= i; j++) {
+					phrasesFragmentsFirst.get(i).add(words[j]);
+				}				
+			}
+			for (int i = 0; i < phrasesFragmentsFirst.size(); i++) {
+				List<String> fragmentsFirst = phrasesFragmentsFirst.get(i);
+				List<String> fragmentsLast = phrasesFragmentsLast.get(i);
+				// Concatenate fragments. ex)
+				// line 1: w1 w2 w3 w4 w5
+				// line 2: w6 w7 w8 w9 w10
+				// => [w4 w5 w6]
+				fragmentsLast.addAll(fragmentsFirst);
+//				System.out.println(fragmentsLast);
+				
+				// Convert String list to String array. 
+				String[] phrase = new String[fragmentsLast.size()];
+				phrase = fragmentsLast.toArray(phrase);
+				
+				trie.insertPhrase(phrase);
+				System.out.println(Arrays.toString(phrase) + " inserted!");
+			}
+		}
+		
 
+		for (int i = 0; i + NUM_WORDS <= words.length; i++) {
+			String[] phrase = Arrays.copyOfRange(words, i, i + NUM_WORDS);
+			trie.insertPhrase(phrase);
+			System.out.println(Arrays.toString(phrase) + " inserted!");
+		}
+		
+		
+		// Handle fragments of a phrase. 
+		phrasesFragmentsLast = new ArrayList<>();
+		for (int i = words.length - NUM_WORDS + 1; i < words.length; i++) {
+			List<String> fragments = new ArrayList<>();
+			phrasesFragmentsLast.add(fragments);		
+			for (List<String> frags : phrasesFragmentsLast) {
+				frags.add(words[i]);
+			}
+		}
+		
+	}
+	
+	
 
 
 
@@ -116,7 +196,7 @@ class PhraseTrieNode {
 	public Map<String, PhraseTrieNode> getMap() {
 		return links;    	
 	}
-	
+
 	public int getCount() {
 		return count;
 	}
@@ -189,13 +269,17 @@ class PhraseTrie {
 	}
 
 
+	// Hold results for given query prefix. 
+	private List<PhraseFreq> results;
+
 	// Print suggestions for given query prefix. 
-	private List<PhraseFreq> list = new ArrayList<>();
-	public int printAutoSuggestions(PhraseTrieNode root, String[] query) {
+	public int printAutoSuggestions(String[] query) {
 		if (query == null || query.length == 0) {
 			System.out.println("Enter a non-empty string.");
 			return 0;
 		}
+		
+		results = new ArrayList<>();
 
 		// Get the last node of the query. 
 		PhraseTrieNode lastNode = this.getLastNode(query);
@@ -213,36 +297,22 @@ class PhraseTrie {
 		}
 
 		if (lastNode.getNumChild() != 0) {
-			//    		suggestionsRecur(lastNode, "");
 			List<String> prefix = new ArrayList<>(Arrays.asList(query));
 			suggestionsRecur(lastNode, prefix);
 		}
-		
+
 		displayResult();
 
 		return 1;
 	}
 
-	private void displayResult() {
-		list.sort(new Comparator<PhraseFreq>() {
-			@Override
-			public int compare(PhraseFreq o1, PhraseFreq o2) {
-				// Descending order. 
-				return o2.count - o1.count;
-			}
-		});
-		
-		for (PhraseFreq phraseFreq : list) {
-			System.out.println(phraseFreq.phrase + " " + phraseFreq.count);
-		}
-	}
 
 	// Print auto-suggestions for given prefix. 
 	// @param node  the last node in the prefix. 
 	private void suggestionsRecur(PhraseTrieNode node, List<String> prefix) {
 		if (node.isEnd()) {
-//			System.out.println("prefix: " + prefix.toString() + " count: " + node.getCount());
-			list.add(new PhraseFreq(prefix.toString(), node.getCount()));
+			//			System.out.println("prefix: " + prefix.toString() + " count: " + node.getCount());
+			results.add(new PhraseFreq(prefix.toString(), node.getCount()));
 		}
 		if (node.getNumChild() == 0) {
 			// No child node. 
@@ -258,10 +328,26 @@ class PhraseTrie {
 		}
 	}
 
+
+	private void displayResult() {
+		results.sort(new Comparator<PhraseFreq>() {
+			@Override
+			public int compare(PhraseFreq o1, PhraseFreq o2) {
+				// Descending order. 
+				return o2.count - o1.count;
+			}
+		});
+
+		for (PhraseFreq phraseFreq : results) {
+			System.out.println(phraseFreq.phrase + " " + phraseFreq.count);
+		}
+	}
+
+
 	private class PhraseFreq {
 		String phrase;
 		int count;
-		
+
 		public PhraseFreq(String str, int count) {
 			this.phrase = str;
 			this.count = count;

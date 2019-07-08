@@ -14,6 +14,7 @@ public class WhatsNextApp {
 	private static String CONFIGURATION_FILE = "config/whats_next_app_config.properties";
 	private static String PATH_FILE_CHOOSER_OPEN;
 	private static NextWordsHolder nextWordsHolder;
+	private static PhrasesTrie phrasesTrie;
 	private static FileParser fileParser;
 
 	
@@ -31,7 +32,8 @@ public class WhatsNextApp {
 		
 		
 		nextWordsHolder = new NextWordsHolder();
-		fileParser = new FileParser(nextWordsHolder);
+		phrasesTrie = new PhrasesTrie();
+		fileParser = new FileParser(nextWordsHolder, phrasesTrie);
 		
 		String[] files = getConfigInfo();
 		
