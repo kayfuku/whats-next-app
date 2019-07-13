@@ -76,11 +76,11 @@ public class PhraseTrieExperiment {
 			System.out.println(frags);
 		}
 		prefix = new String[]{ "gg" };
-		trie.printAutoSuggestions(prefix);
+		trie.printAutoSuggestions(prefix); // [gg, hh, ii] 1
 		prefix = new String[]{ "hh" };
-		trie.printAutoSuggestions(prefix);
+		trie.printAutoSuggestions(prefix); // [hh, ii, jj] 1
 		prefix = new String[]{ "ii" };
-		trie.printAutoSuggestions(prefix);
+		trie.printAutoSuggestions(prefix); // [ii, jj, kk] 1
 
 		
 

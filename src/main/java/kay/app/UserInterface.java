@@ -28,13 +28,15 @@ public class UserInterface implements Runnable {
 
 	private FileParser fileParser;
 	private NextWordsHolder nextWordsHolder;
+	private PhrasesTrie phrasesTrie;
 	private MyPanel myPanel;
 	private static Logger logger = LogManager.getLogger();
 
 
-	public UserInterface(FileParser fileParser, NextWordsHolder nextWordsHolder) {
+	public UserInterface(FileParser fileParser, NextWordsHolder nextWordsHolder, PhrasesTrie phrasesTrie) {
 		this.fileParser = fileParser;
 		this.nextWordsHolder = nextWordsHolder;
+		this.phrasesTrie = phrasesTrie;
 	}
 
 
@@ -229,15 +231,40 @@ public class UserInterface implements Runnable {
 		/**
 		 * When user press the "Submit" button, this will be called to display the result. 
 		 */
+//		private void getResult() {
+//
+//			String word = textField.getText().trim().toLowerCase();
+//
+//			if (!word.equals("")) {
+//				String result = nextWordsHolder.buildResult(word, 100);
+//
+//				result += "\n\nTotal number of next words for word '" + word + "': " + nextWordsHolder.getSum() + "\n";
+//				result += "\nTotal number of words as keys: " + nextWordsHolder.getWordToCountMapSize() + "\n";
+//
+//				txtAreaResult.setText(result);		
+//			}
+//
+//		}
+
+		
+		/**
+		 * For phrases. 
+		 * When user press the "Submit" button, this will be called to display the result. 
+		 */
 		private void getResult() {
 
-			String word = textField.getText().trim().toLowerCase();
 
-			if (!word.equals("")) {
-				String result = nextWordsHolder.buildResult(word, 100);
+			String line = textField.getText().trim().toLowerCase();
+			String[] words = line.split("\\s+");
 
-				result += "\n\nTotal number of next words for word '" + word + "': " + nextWordsHolder.getSum() + "\n";
-				result += "\nTotal number of words as keys: " + nextWordsHolder.getWordToCountMapSize() + "\n";
+
+			if (words.length != 0) {
+				String result = phrasesTrie.buildResult(words, 100);
+
+				
+//				String result = nextWordsHolder.buildResult(word, 100);
+//				result += "\n\nTotal number of next words for word '" + word + "': " + nextWordsHolder.getSum() + "\n";
+//				result += "\nTotal number of words as keys: " + nextWordsHolder.getWordToCountMapSize() + "\n";
 
 				txtAreaResult.setText(result);		
 			}

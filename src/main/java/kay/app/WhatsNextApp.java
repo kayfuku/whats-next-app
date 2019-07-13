@@ -37,7 +37,7 @@ public class WhatsNextApp {
 		
 		String[] files = getConfigInfo();
 		
-		Thread uiThread = new Thread(new UserInterface(fileParser, nextWordsHolder));
+		Thread uiThread = new Thread(new UserInterface(fileParser, nextWordsHolder, phrasesTrie));
 		uiThread.start();
 		
 	}

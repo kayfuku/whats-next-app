@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,10 +75,11 @@ public class PhrasesTrie {
 
 
 	// Hold results for given query prefix. 
-	private List<PhraseFreq> list = new ArrayList<>();
+	private List<PhraseFreq> list;
 	
 	// Print suggestions for given query prefix. 
-	public int printAutoSuggestions(PhraseTrieNode root, String[] query) {
+	public int printAutoSuggestions(String[] query) {
+		list = new ArrayList<>();
 		if (query == null || query.length == 0) {
 			System.out.println("Enter a non-empty string.");
 			return 0;
@@ -94,6 +96,7 @@ public class PhrasesTrie {
 		if (lastNode.isEnd() && lastNode.getNumChild() == 0) {
 			// The query is present as a phrase, and there is no subtree
 			// below the last node. 
+			list.add(new PhraseFreq(query.toString(), 1));
 			System.out.println(Arrays.toString(query));
 			return -1;
 		}
@@ -103,7 +106,7 @@ public class PhrasesTrie {
 			suggestionsRecur(lastNode, prefix);
 		}
 
-		displayResult();
+//		displayResult();
 
 		return 1;
 	}
@@ -143,6 +146,47 @@ public class PhrasesTrie {
 		for (PhraseFreq phraseFreq : list) {
 			System.out.println(phraseFreq.phrase + " " + phraseFreq.count);
 		}
+	} 
+	
+	
+	/**
+	 * Builds the result list using StringBuffer to display it on the JLabel object. 
+	 * @param word  the key to be used
+	 * @param top  the number of rows of the result to be displayed
+	 * @return string
+	 */
+	public synchronized String buildResult(String[] words, int top) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("prefix: \tphrase: \t\tcount: \n");
+		sb.append(Arrays.toString(words) + "\n");
+		
+		printAutoSuggestions(words);
+		
+		if (list.isEmpty()) {
+			return "No phrase found.";
+		}
+		
+		list.sort(new Comparator<PhraseFreq>() {
+			@Override
+			public int compare(PhraseFreq o1, PhraseFreq o2) {
+				// Descending order. 
+				return o2.count - o1.count;
+			}
+		});
+
+		int i = 0;
+		for (PhraseFreq phraseFreq : list) {
+			if (i == top) { 
+				break; 
+			}
+			sb.append("\t" + phraseFreq.phrase + "         " + "\t" + phraseFreq.count);
+			sb.append("\n");
+			i++;
+
+//			System.out.println(phraseFreq.phrase + " " + phraseFreq.count);
+		}
+		
+		return sb.toString();
 	}
 	
 
@@ -154,6 +198,8 @@ public class PhrasesTrie {
 			this.phrase = str;
 			this.count = count;
 		}
+		
+		
 	}
 
 
