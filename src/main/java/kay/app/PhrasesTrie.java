@@ -81,7 +81,7 @@ public class PhrasesTrie {
 	public int printAutoSuggestions(String[] query) {
 		list = new ArrayList<>();
 		if (query == null || query.length == 0) {
-			System.out.println("Enter a non-empty string.");
+//			System.out.println("Enter a non-empty string.");
 			return 0;
 		}
 
@@ -89,7 +89,7 @@ public class PhrasesTrie {
 		PhraseTrieNode lastNode = this.getLastNode(query);
 		if (lastNode == null) {
 			// There is no string that starts with this query. 
-			System.out.println("No phrase found.");
+//			System.out.println("No phrase found.");
 			return 0;
 		}
 
@@ -97,7 +97,7 @@ public class PhrasesTrie {
 			// The query is present as a phrase, and there is no subtree
 			// below the last node. 
 			list.add(new PhraseFreq(query.toString(), 1));
-			System.out.println(Arrays.toString(query));
+//			System.out.println(Arrays.toString(query));
 			return -1;
 		}
 
