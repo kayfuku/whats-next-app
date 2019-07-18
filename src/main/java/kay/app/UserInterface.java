@@ -252,26 +252,22 @@ public class UserInterface implements Runnable {
 		 * When user press the "Submit" button, this will be called to display the result. 
 		 */
 		private void getResult() {
-
-			String line = textField.getText();
-			if (line.matches("\\s+")) {
+			String line = textField.getText().trim();
+			if (line.isEmpty()) {
 				txtAreaResult.setText("Enter a word or phrase.");
 				textField.setText("");		
 				return;
 			}
-			String[] words = line.trim().split("\\s+");
 			
-			if (words.length != 0) {
-				String result = phrasesTrie.buildResult(words, 100);
+			String[] words = line.split("\\s+");
+			String result = phrasesTrie.buildResult(words, 100);
 
-				
-//				String result = nextWordsHolder.buildResult(word, 100);
-//				result += "\n\nTotal number of next words for word '" + word + "': " + nextWordsHolder.getSum() + "\n";
-//				result += "\nTotal number of words as keys: " + nextWordsHolder.getWordToCountMapSize() + "\n";
+			
+//			String result = nextWordsHolder.buildResult(word, 100);
+//			result += "\n\nTotal number of next words for word '" + word + "': " + nextWordsHolder.getSum() + "\n";
+//			result += "\nTotal number of words as keys: " + nextWordsHolder.getWordToCountMapSize() + "\n";
 
-				txtAreaResult.setText(result);		
-			}
-
+			txtAreaResult.setText(result);		
 		}
 
 	}
