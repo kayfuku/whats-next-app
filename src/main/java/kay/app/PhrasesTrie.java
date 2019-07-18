@@ -96,7 +96,7 @@ public class PhrasesTrie {
 		if (lastNode.isEnd() && lastNode.getNumChild() == 0) {
 			// The query is present as a phrase, and there is no subtree
 			// below the last node. 
-			list.add(new PhraseFreq(query.toString(), 1));
+			list.add(new PhraseFreq(Arrays.toString(query), lastNode.getCount()));
 //			System.out.println(Arrays.toString(query));
 			return -1;
 		}
@@ -156,6 +156,10 @@ public class PhrasesTrie {
 	 * @return string
 	 */
 	public synchronized String buildResult(String[] words, int top) {
+		for (int i = 0; i < words.length; i++) {
+			words[i] = words[i].trim().toLowerCase();
+		}
+		
 		StringBuffer sb = new StringBuffer();
 		sb.append("prefix: \tphrase: \t\tcount: \n");
 		sb.append(Arrays.toString(words) + "\n");

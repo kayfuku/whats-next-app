@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class PhraseTrieExperiment {
 	
@@ -15,7 +16,18 @@ public class PhraseTrieExperiment {
 	private static int NUM_WORDS = 3;
 
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
+		
+		
+		// Test detect space. 
+//		String word = " ";
+//		System.out.println("Enter a word.");
+//		Scanner sc = new Scanner(System.in);
+//		String str = sc.next();
+//		boolean b = str.equals(" ");
+//		System.out.println(b);
+//		System.out.println();
+		
 
 		// Test search
 		String line = "aa bb cc dd ee bb cc ff bb cc ff ee gg";

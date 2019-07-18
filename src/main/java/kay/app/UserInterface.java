@@ -253,11 +253,14 @@ public class UserInterface implements Runnable {
 		 */
 		private void getResult() {
 
-
-			String line = textField.getText().trim().toLowerCase();
-			String[] words = line.split("\\s+");
-
-
+			String line = textField.getText();
+			if (line.matches("\\s+")) {
+				txtAreaResult.setText("Enter a word or phrase.");
+				textField.setText("");		
+				return;
+			}
+			String[] words = line.trim().split("\\s+");
+			
 			if (words.length != 0) {
 				String result = phrasesTrie.buildResult(words, 100);
 
