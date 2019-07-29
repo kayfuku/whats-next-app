@@ -255,7 +255,7 @@ public class UserInterface implements Runnable {
 			String line = textField.getText().trim();
 			if (line.isEmpty()) {
 				txtAreaResult.setText("Enter a word or phrase.");
-				textField.setText("");		
+				textField.setText("");
 				return;
 			}
 			

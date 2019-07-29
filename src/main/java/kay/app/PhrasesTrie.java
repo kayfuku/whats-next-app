@@ -192,14 +192,13 @@ public class PhrasesTrie {
 			if (i == top) { 
 				break; 
 			}
-//			sb.append("\t" + phraseFreq.phrase + "         " + "\t" + phraseFreq.count);
 			sb.append("\t" + phraseFreq.phrase + "         \t" + phraseFreq.count + "\t" + 
 					String.format("%.1f", (double) phraseFreq.count * 100 / sum) + " %");
 			sb.append("\n");
-			i++;
-
-//			System.out.println(phraseFreq.phrase + " " + phraseFreq.count);
+			i++;			
 		}
+		
+		sb.append("\n\nTotal number of lists for phrase '" + Arrays.toString(words) + "': " + sum + "\n");
 		
 		return sb.toString();
 	}
