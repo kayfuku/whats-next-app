@@ -91,7 +91,7 @@ public class NextWordsHolder {
 			nextWord = entry.getKey();
 			count = entry.getValue();
 			sum += count;
-			list.add(new NextWordToCount(nextWord, count));		
+			list.add(new NextWordToCount(nextWord, count));
 		}
 		
 		Collections.sort(list);

@@ -75,11 +75,11 @@ public class PhrasesTrie {
 
 
 	// Hold results for given query prefix. 
-	private List<PhraseFreq> list;
+	private List<PhraseFreq> resultList;
 	
-	// Print suggestions for given query prefix. 
-	public int printAutoSuggestions(String[] query) {
-		list = new ArrayList<>();
+	// Get suggestions for given query prefix. 
+	public int getAutoSuggestions(String[] query) {
+		resultList = new ArrayList<>();
 		if (query == null || query.length == 0) {
 //			System.out.println("Enter a non-empty string.");
 			return 0;
@@ -96,7 +96,7 @@ public class PhrasesTrie {
 		if (lastNode.isEnd() && lastNode.getNumChild() == 0) {
 			// The query is present as a phrase, and there is no subtree
 			// below the last node. 
-			list.add(new PhraseFreq(Arrays.toString(query), lastNode.getCount()));
+			resultList.add(new PhraseFreq(Arrays.toString(query), lastNode.getCount()));
 //			System.out.println(Arrays.toString(query));
 			return -1;
 		}
@@ -117,7 +117,7 @@ public class PhrasesTrie {
 	private void suggestionsRecur(PhraseTrieNode node, List<String> prefix) {
 		if (node.isEnd()) {
 			//			System.out.println("prefix: " + prefix.toString() + " count: " + node.getCount());
-			list.add(new PhraseFreq(prefix.toString(), node.getCount()));
+			resultList.add(new PhraseFreq(prefix.toString(), node.getCount()));
 		}
 		if (node.getNumChild() == 0) {
 			// No child node. 
@@ -133,9 +133,9 @@ public class PhrasesTrie {
 		}
 	}
 	
-	
+	// For testing. 
 	private void displayResult() {
-		list.sort(new Comparator<PhraseFreq>() {
+		resultList.sort(new Comparator<PhraseFreq>() {
 			@Override
 			public int compare(PhraseFreq o1, PhraseFreq o2) {
 				// Descending order. 
@@ -143,7 +143,7 @@ public class PhrasesTrie {
 			}
 		});
 
-		for (PhraseFreq phraseFreq : list) {
+		for (PhraseFreq phraseFreq : resultList) {
 			System.out.println(phraseFreq.phrase + " " + phraseFreq.count);
 		}
 	} 
@@ -161,29 +161,40 @@ public class PhrasesTrie {
 		}
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("prefix: \tphrase: \t\tcount: \n");
+//		sb.append("prefix: \tphrase: \t\tcount: \n");
+		sb.append("prefix: " + "\tphrase: " + "              \tcount: " + "\tprobability: \n");
+
 		sb.append(Arrays.toString(words) + "\n");
 		
-		printAutoSuggestions(words);
+		// Get the result in the resultList. 
+		getAutoSuggestions(words);
 		
-		if (list.isEmpty()) {
+		if (resultList.isEmpty()) {
 			return "No phrase found.";
 		}
 		
-		list.sort(new Comparator<PhraseFreq>() {
+		// Get the sum of the count. 
+		int sum = 0;
+		for (PhraseFreq pf : resultList) {
+			sum += pf.count;
+		}
+		
+		resultList.sort(new Comparator<PhraseFreq>() {
 			@Override
 			public int compare(PhraseFreq o1, PhraseFreq o2) {
-				// Descending order. 
+				// Sort it by count in descending order. 
 				return o2.count - o1.count;
 			}
 		});
 
 		int i = 0;
-		for (PhraseFreq phraseFreq : list) {
+		for (PhraseFreq phraseFreq : resultList) {
 			if (i == top) { 
 				break; 
 			}
-			sb.append("\t" + phraseFreq.phrase + "         " + "\t" + phraseFreq.count);
+//			sb.append("\t" + phraseFreq.phrase + "         " + "\t" + phraseFreq.count);
+			sb.append("\t" + phraseFreq.phrase + "         \t" + phraseFreq.count + "\t" + 
+					String.format("%.1f", (double) phraseFreq.count * 100 / sum) + " %");
 			sb.append("\n");
 			i++;
 
