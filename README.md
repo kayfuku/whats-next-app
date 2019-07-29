@@ -4,7 +4,7 @@ Kei Fukutani
 
 ## Goal
 This app allows user to know the tendency of following words.  
-When user types in a word, this app displays a list of words that follow the word and the probability of the word following based on a text file/files.   
+When user types in a word, this app displays a list of words that follow the word and the probability of the word following based on a text file(s).   
 
 ## Example 
 If user types in "go", then a list of words as shown below will be displayed, which means a word "to" follows the word "go" with probability of 13.1 %, "and" follows "go" with probability of 8.5 %, and "on" follows "go" with probability of 6.0 %.  
