@@ -94,7 +94,7 @@ public class UserInterface implements Runnable {
 			txtAreaResult = new TextArea(20, 5);
 
 			lblEnterNumWords.setBounds(20, 20, 230, 20);
-			lblEnterNumWords.setFont(new Font(null, Font.PLAIN, 20));
+			lblEnterNumWords.setFont(new Font(null, Font.PLAIN, 18));
 			numWordsField.setBounds(250, 20, 40, 30);
 			numWordsField.setFont(new Font(null, Font.PLAIN, 16));
 			btnSelectBooks.setBounds(20, 70, 200, 30);
@@ -103,7 +103,7 @@ public class UserInterface implements Runnable {
 			lblReading.setBounds(20, 120, 600, 20);
 			lblReading.setFont(new Font(null, Font.PLAIN, 16));
 			lblEnterAWord.setBounds(20, 160, 230, 20);
-			lblEnterAWord.setFont(new Font(null, Font.PLAIN, 20));
+			lblEnterAWord.setFont(new Font(null, Font.PLAIN, 18));
 			queryField.setBounds(250, 160, 200, 30);
 			queryField.setFont(new Font(null, Font.PLAIN, 16));
 			btnSubmit.setBounds(470, 160, 100, 30);
