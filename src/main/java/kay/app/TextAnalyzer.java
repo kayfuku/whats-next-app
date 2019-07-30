@@ -73,7 +73,7 @@ public class TextAnalyzer {
 	
 	// For phrases. 
 	private PhrasesTrie phrasesTrie;
-	private int NUM_WORDS = 3;
+//	private int NUM_WORDS;
 	private List<List<String>> phrasesFragmentsLast;
 	private List<List<String>> phrasesFragmentsFirst;	
 	
@@ -84,7 +84,7 @@ public class TextAnalyzer {
 	public void buildTrie(String line) {
 		String[] words = preprocessText(line);
 		
-		if (words.length < NUM_WORDS) {
+		if (words.length < phrasesTrie.NUM_WORDS) {
 			return;
 		}
 
@@ -93,7 +93,7 @@ public class TextAnalyzer {
 		// the beginning of this line. 
 		if (phrasesFragmentsLast != null) {
 			phrasesFragmentsFirst = new ArrayList<>();
-			for (int i = 0; i < NUM_WORDS - 1; i++) {
+			for (int i = 0; i < phrasesTrie.NUM_WORDS - 1; i++) {
 				List<String> fragments = new ArrayList<>();
 				phrasesFragmentsFirst.add(fragments);
 			}
@@ -119,14 +119,14 @@ public class TextAnalyzer {
 			}
 		}		
 
-		for (int i = 0; i + NUM_WORDS <= words.length; i++) {
-			String[] phrase = Arrays.copyOfRange(words, i, i + NUM_WORDS);
+		for (int i = 0; i + phrasesTrie.NUM_WORDS <= words.length; i++) {
+			String[] phrase = Arrays.copyOfRange(words, i, i + phrasesTrie.NUM_WORDS);
 			phrasesTrie.insertPhrase(phrase);
 		}
 
 		// Handle fragments of a phrase. 
 		phrasesFragmentsLast = new ArrayList<>();
-		for (int i = words.length - NUM_WORDS + 1; i < words.length; i++) {
+		for (int i = words.length - phrasesTrie.NUM_WORDS + 1; i < words.length; i++) {
 			makeTempFragment(i, words);
 		}
 

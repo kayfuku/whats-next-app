@@ -33,10 +33,9 @@ public class UserInterface implements Runnable {
 	private static Logger logger = LogManager.getLogger();
 
 
-	public UserInterface(FileParser fileParser, NextWordsHolder nextWordsHolder, PhrasesTrie phrasesTrie) {
+	public UserInterface(FileParser fileParser, NextWordsHolder nextWordsHolder) {
 		this.fileParser = fileParser;
 		this.nextWordsHolder = nextWordsHolder;
-		this.phrasesTrie = phrasesTrie;
 	}
 
 
@@ -67,9 +66,9 @@ public class UserInterface implements Runnable {
 	public class MyPanel extends JPanel implements ActionListener {
 
 		private static final long serialVersionUID = 1L;
-		private JLabel lblReading, lblEnterAWord;
+		private JLabel lblReading, lblEnterAWord, lblEnterNumWords;
 		private JButton btnSubmit, btnSelectBooks;
-		private JTextField textField;
+		private JTextField numWordsField, queryField;
 		private TextArea txtAreaResult;
 		private File[] files;
 		private final char[] SPINNER = {'|', '/', '-', '\\'};
@@ -85,32 +84,40 @@ public class UserInterface implements Runnable {
 		 * Initialize the panel components. 
 		 */
 		private void initialize() {
+			lblEnterNumWords = new JLabel("Enter a phrase length: ");
+			numWordsField = new JTextField("", 20);
 			btnSelectBooks = new JButton("Select Books");
 			lblReading = new JLabel("");
-			lblEnterAWord = new JLabel("Enter a word: ");
-			textField = new JTextField("", 20);
+			lblEnterAWord = new JLabel("Enter a word/phrase: ");
+			queryField = new JTextField("", 20);
 			btnSubmit = new JButton("Submit");
 			txtAreaResult = new TextArea(20, 5);
 
-			btnSelectBooks.setBounds(20, 20, 200, 30);
+			lblEnterNumWords.setBounds(20, 20, 230, 20);
+			lblEnterNumWords.setFont(new Font(null, Font.PLAIN, 20));
+			numWordsField.setBounds(250, 20, 40, 30);
+			numWordsField.setFont(new Font(null, Font.PLAIN, 16));
+			btnSelectBooks.setBounds(20, 70, 200, 30);
 			btnSelectBooks.setFont(new Font(null, Font.PLAIN, 16));
 			btnSelectBooks.addActionListener(this);
-			lblReading.setBounds(20, 60, 600, 20);
+			lblReading.setBounds(20, 120, 600, 20);
 			lblReading.setFont(new Font(null, Font.PLAIN, 16));
-			lblEnterAWord.setBounds(20, 100, 400, 20);
+			lblEnterAWord.setBounds(20, 160, 230, 20);
 			lblEnterAWord.setFont(new Font(null, Font.PLAIN, 20));
-			textField.setBounds(20, 140, 200, 30);
-			textField.setFont(new Font(null, Font.PLAIN, 16));
-			btnSubmit.setBounds(240, 140, 100, 30);
+			queryField.setBounds(250, 160, 200, 30);
+			queryField.setFont(new Font(null, Font.PLAIN, 16));
+			btnSubmit.setBounds(470, 160, 100, 30);
 			btnSubmit.setFont(new Font(null, Font.PLAIN, 16));
 			btnSubmit.addActionListener(this);
-			txtAreaResult.setBounds(20, 190, 600, 400);
+			txtAreaResult.setBounds(20, 200, 600, 400);
 			txtAreaResult.setFont(new Font(null, Font.PLAIN, 16));
 
+			add(lblEnterNumWords);
+			add(numWordsField);
 			add(btnSelectBooks);
 			add(lblReading);
 			add(lblEnterAWord);
-			add(textField);
+			add(queryField);
 			add(btnSubmit);
 			add(txtAreaResult);
 
@@ -130,7 +137,7 @@ public class UserInterface implements Runnable {
 
 			switch (cmd) {
 			case "Select Books":
-				btnSelectBooks.setEnabled(false);
+//				btnSelectBooks.setEnabled(false);
 				selectBooks();
 				break;
 			case "Submit":
@@ -148,6 +155,10 @@ public class UserInterface implements Runnable {
 		 * that runs in a separate thread. 
 		 */
 		private void selectBooks() {
+			
+			lblReading.setText("");
+			queryField.setText("");
+			txtAreaResult.setText("");
 			
 			String path = WhatsNextApp.getPathFileChooserOpen();
 			JFileChooser jFileChooser = new JFileChooser(new File(path));
@@ -172,6 +183,17 @@ public class UserInterface implements Runnable {
 		 * @param files
 		 */
 		void readFiles(File[] files) {
+			// Create a new Trie. 
+			phrasesTrie = new PhrasesTrie();
+			fileParser.setPhrasesTrie(phrasesTrie);
+			
+			String numWords = numWordsField.getText().trim();
+			if (numWords.isEmpty()) {
+				txtAreaResult.setText("Enter phrase length.");
+				numWordsField.setText("");
+				return;
+			}
+			phrasesTrie.NUM_WORDS = Integer.parseInt(numWords);
 			
 			fileParser.readFile(files);	
 			
@@ -240,7 +262,7 @@ public class UserInterface implements Runnable {
 		 */
 //		private void getResult() {
 //
-//			String word = textField.getText().trim().toLowerCase();
+//			String word = queryField.getText().trim().toLowerCase();
 //
 //			if (!word.equals("")) {
 //				String result = nextWordsHolder.buildResult(word, 100);
@@ -259,14 +281,15 @@ public class UserInterface implements Runnable {
 		 * When user press the "Submit" button, this will be called to display the result. 
 		 */
 		private void getResult() {
-			String line = textField.getText().trim();
+			String line = queryField.getText().trim();
 			if (line.isEmpty()) {
-				txtAreaResult.setText("Enter a word or phrase.");
-				textField.setText("");
+				txtAreaResult.setText("Enter a word or phrase in the query field.");
+				queryField.setText("");
 				return;
-			}
-			
+			}			
 			String[] words = line.split("\\s+");
+						
+			
 			String result = phrasesTrie.buildResult(words, 100);
 
 			

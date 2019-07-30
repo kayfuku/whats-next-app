@@ -14,7 +14,6 @@ public class WhatsNextApp {
 	private static String CONFIGURATION_FILE = "config/whats_next_app_config.properties";
 	private static String PATH_FILE_CHOOSER_OPEN;
 	private static NextWordsHolder nextWordsHolder;
-	private static PhrasesTrie phrasesTrie;
 	private static FileParser fileParser;
 
 	
@@ -32,12 +31,12 @@ public class WhatsNextApp {
 		
 		
 		nextWordsHolder = new NextWordsHolder();
-		phrasesTrie = new PhrasesTrie();
-		fileParser = new FileParser(nextWordsHolder, phrasesTrie);
+		fileParser = new FileParser(nextWordsHolder);
 		
 		String[] files = getConfigInfo();
 		
-		Thread uiThread = new Thread(new UserInterface(fileParser, nextWordsHolder, phrasesTrie));
+		// User Interface. 
+		Thread uiThread = new Thread(new UserInterface(fileParser, nextWordsHolder));
 		uiThread.start();
 		
 	}

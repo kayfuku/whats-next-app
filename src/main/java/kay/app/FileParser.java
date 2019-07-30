@@ -24,12 +24,14 @@ public class FileParser {
 	private volatile boolean finishedReading = false;
 	
 	
-	public FileParser(NextWordsHolder nextWordsHolder, PhrasesTrie phrasesTrie) {
+	public FileParser(NextWordsHolder nextWordsHolder) {
 		this.nextWordsHolder = nextWordsHolder;
-		this.phrasesTrie = phrasesTrie;
 	}
 	public boolean getFinishedReading() {
 		return finishedReading;
+	}
+	public void setPhrasesTrie(PhrasesTrie phrasesTrie) {
+		this.phrasesTrie = phrasesTrie;
 	}
 	
 	
@@ -102,39 +104,35 @@ public class FileParser {
 
 
 
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

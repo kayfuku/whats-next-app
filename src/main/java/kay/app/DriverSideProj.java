@@ -10,8 +10,7 @@ public class DriverSideProj {
 		String inputFile = "";
 		
 		NextWordsHolder nextWordsHolder = new NextWordsHolder();
-		PhrasesTrie phrasesTrie = new PhrasesTrie();
-		FileParser fileParser = new FileParser(nextWordsHolder, phrasesTrie);
+		FileParser fileParser = new FileParser(nextWordsHolder);
 		
 		fileParser.readFile(inputFile);
 		

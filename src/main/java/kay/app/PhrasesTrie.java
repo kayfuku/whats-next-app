@@ -11,6 +11,7 @@ public class PhrasesTrie {
 	
 	PhraseTrieNode root;
 	int totalSize;
+	int NUM_WORDS;
 
 	public PhrasesTrie() {
 		root = new PhraseTrieNode();      
@@ -177,7 +178,7 @@ public class PhrasesTrie {
 			sum += pf.count;
 		}
 		
-		sb.append("Total number of lists for phrase '" + Arrays.toString(words) + "': " + sum + "\n\n");
+		sb.append("Total number of lists for prefix '" + Arrays.toString(words) + "': " + sum + "\n\n");
 		sb.append("prefix: " + "\tphrase: " + "              \tcount: " + "\tprobability: \n");
 		sb.append(Arrays.toString(words) + "\n");		
 		
