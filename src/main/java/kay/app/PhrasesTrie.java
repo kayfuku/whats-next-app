@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class PhrasesTrie {
 	
-	public PhraseTrieNode root;
+	PhraseTrieNode root;
+	int totalSize;
 
 	public PhrasesTrie() {
 		root = new PhraseTrieNode();      
@@ -27,6 +27,8 @@ public class PhrasesTrie {
 			}
 			node = node.get(currWord);
 		}
+		totalSize++;
+		
 		// This is not meaningful for now. 
 		node.setEnd();
 	}
@@ -161,11 +163,7 @@ public class PhrasesTrie {
 		}
 		
 		StringBuffer sb = new StringBuffer();
-//		sb.append("prefix: \tphrase: \t\tcount: \n");
-		sb.append("prefix: " + "\tphrase: " + "              \tcount: " + "\tprobability: \n");
 
-		sb.append(Arrays.toString(words) + "\n");
-		
 		// Get the result in the resultList. 
 		getAutoSuggestions(words);
 		
@@ -178,6 +176,10 @@ public class PhrasesTrie {
 		for (PhraseFreq pf : resultList) {
 			sum += pf.count;
 		}
+		
+		sb.append("Total number of lists for phrase '" + Arrays.toString(words) + "': " + sum + "\n\n");
+		sb.append("prefix: " + "\tphrase: " + "              \tcount: " + "\tprobability: \n");
+		sb.append(Arrays.toString(words) + "\n");		
 		
 		resultList.sort(new Comparator<PhraseFreq>() {
 			@Override
@@ -197,9 +199,7 @@ public class PhrasesTrie {
 			sb.append("\n");
 			i++;			
 		}
-		
-		sb.append("\n\nTotal number of lists for phrase '" + Arrays.toString(words) + "': " + sum + "\n");
-		
+				
 		return sb.toString();
 	}
 	

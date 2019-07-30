@@ -95,7 +95,7 @@ public class UserInterface implements Runnable {
 			btnSelectBooks.setBounds(20, 20, 200, 30);
 			btnSelectBooks.setFont(new Font(null, Font.PLAIN, 16));
 			btnSelectBooks.addActionListener(this);
-			lblReading.setBounds(20, 60, 400, 20);
+			lblReading.setBounds(20, 60, 600, 20);
 			lblReading.setFont(new Font(null, Font.PLAIN, 16));
 			lblEnterAWord.setBounds(20, 100, 400, 20);
 			lblEnterAWord.setFont(new Font(null, Font.PLAIN, 20));
@@ -175,8 +175,15 @@ public class UserInterface implements Runnable {
 			
 			fileParser.readFile(files);	
 			
-			lblReading.setText("Finished reading " + files.length + " book" + 
-			                   ((files.length <= 1) ? "" : "s") + ".");
+			StringBuilder sb = new StringBuilder();
+			sb.append("Finished reading " + files.length + " book" + 
+	                   ((files.length <= 1) ? "" : "s") + ". ");
+			// For phrases. 
+			sb.append("Total number of lists: " + phrasesTrie.totalSize);
+			
+			lblReading.setText(sb.toString());
+			
+			
 
 			
 //			Thread tReadFile = new Thread(new Runnable() {

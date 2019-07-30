@@ -78,7 +78,9 @@ public class FileParser {
 				// Stores data.
 				line = line.trim();
 				if (!line.trim().equals("")) {
+					// For next words. 
 //					textAnalyzer.makeNextWordsCountMap(line);
+					// For phrases. 
 					textAnalyzer.buildTrie(line);
 				}				
 				
