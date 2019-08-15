@@ -9,7 +9,7 @@ When user types in a word, this app displays a list of words that follow the wor
 ## Example 
 If user types in "go", then a list of words as shown below will be displayed, which means a word "to" follows the word "go" with probability of 13.1 %, "and" follows "go" with probability of 8.5 %, and "on" follows "go" with probability of 6.0 % based on the 16 text files of your choice.  
 
-<img src="images/example1.jpeg" width="800">
+<img src="images/example2.jpeg" width="800">
 
 
 ## Design 
