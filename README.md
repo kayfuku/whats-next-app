@@ -7,7 +7,8 @@ This app allows user to know the tendency of following words.
 When user types in a word, this app displays a list of words that follow the word and the probability of the word following based on a text file(s).   
 
 ## Example 
-This app shows the phrases and its frequency that show up in the text files of your choice. User types in the length of the consecutive words and prefix word(s). The example below shows that there are 80 "take care of" in the 30 books textfiles, followed by 14 "take charge of", 12 "take off your", and so on. 
+This app shows the phrases and its frequency that show up in the text files of your choice. User types in the length of the consecutive words and prefix word(s). The example below shows that there are 80 "take care of" in the 30 books text files, followed by 14 "take charge of", 12 "take off your", and so on.  
+  
 
 <img src="images/example2.jpg" width="800">
 
