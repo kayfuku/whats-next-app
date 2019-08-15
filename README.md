@@ -7,7 +7,7 @@ This app allows user to know the tendency of following words.
 When user types in a word, this app displays a list of words that follow the word and the probability of the word following based on a text file(s).   
 
 ## Example 
-If user types in "go", then a list of words as shown below will be displayed, which means a word "to" follows the word "go" with probability of 13.1 %, "and" follows "go" with probability of 8.5 %, and "on" follows "go" with probability of 6.0 % based on the 16 text files of your choice.  
+This app shows the phrases and its frequency that show up in the text files of your choice. User types in the length of the consecutive words and prefix word(s). The example below shows that there are 80 "take care of" in the 30 books textfiles, followed by 14 "take charge of", 12 "take off your", and so on. 
 
 <img src="images/example2.jpg" width="800">
 
