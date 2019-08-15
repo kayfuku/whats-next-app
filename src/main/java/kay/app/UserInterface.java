@@ -88,7 +88,7 @@ public class UserInterface implements Runnable {
 			numWordsField = new JTextField("", 20);
 			btnSelectBooks = new JButton("Select Books");
 			lblReading = new JLabel("");
-			lblEnterAWord = new JLabel("Enter a word/phrase: ");
+			lblEnterAWord = new JLabel("Enter a prefix: ");
 			queryField = new JTextField("", 20);
 			btnSubmit = new JButton("Submit");
 			txtAreaResult = new TextArea(20, 5);
