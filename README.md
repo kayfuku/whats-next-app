@@ -30,13 +30,13 @@ This runs in a separate thread from main thread.
 ## User Interface
 First, user enters a length of window that scans the text files, and next, user presses the button "Select Books", and selects text files. Then, press the button "Read" on the panel to the right of main panel. The app starts reading the text files the user has selected. After the app has finished reading those books, the user enters word(s) in the text field and presses the submit button. This app displays a list of words or phrase that follow the word(s) and the probability.  
 
-<img src="images/ui1.jpeg" width="600">
+<img src="images/ui1.jpg" width="600">
 <img src="images/ui2.jpeg" width="600">
-<img src="images/ui3.jpeg" width="800">
+<img src="images/example2.jpg" width="800">
 
 
 ## Implementation 
-* In the **Data Structure**, Map1 maps one word to Map2 that maps the next word to its count. 
+* In the **Data Structure**, each Trie node has its own hash map.  
 * The **User Interface** is provided by the javax.swing package which contains JFrame, JPanel, JTextfield, etc. 
 
 
