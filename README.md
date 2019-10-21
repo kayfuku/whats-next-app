@@ -31,7 +31,7 @@ This runs in a separate thread from main thread.
 First, user enters a length of window that scans the text files, and next, user presses the button "Select Books", and selects text files. Then, press the button "Read" on the panel to the right of main panel. The app starts reading the text files the user has selected. After the app has finished reading those books, the user enters word(s) in the text field and presses the submit button. This app displays a list of words or phrase that follow the word(s) and the probability.  
 
 <img src="images/ui1.jpg" width="600">
-<img src="images/ui2.jpeg" width="600">
+<img src="images/ui2.jpg" width="600">
 <img src="images/example2.jpg" width="800">
 
 
