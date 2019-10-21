@@ -37,11 +37,5 @@ First, user enters a length of window that scans the text files, and next, user 
 <img src="images/example2.jpg" width="800">
 
 
-## Implementation 
-* In the **Data Structure**, each Trie node has its own hash map.  
-* The **User Interface** is provided by the javax.swing package which contains JFrame, JPanel, JTextfield, etc. 
-
-
-
 
 
