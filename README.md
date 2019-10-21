@@ -4,7 +4,7 @@ Kei Fukutani
 
 ## Goal
 This app allows user to know the tendency of following words.  
-When user types in a word, this app displays a list of words that follow the word and the probability of the word following based on a text file(s).   
+When user types in word(s), this app displays a list of words or phrase that follow the word(s) and the probability of the words or phrase following based on a text file(s).   
 
 ## Example 
 This app shows the phrases and its frequency that show up in the text files of your choice. User types in the length of the consecutive words and prefix word(s). The example below shows that there are 80 "take care of" in the 30 books text files, followed by 14 "take charge of", 12 "take off your", and so on.  
@@ -28,7 +28,7 @@ This runs in a separate thread from main thread.
 
 
 ## User Interface
-First, user presses the button "Select Books" , and selects text files. Then, press the button "Read" on the panel to the right of main panel. The app starts reading the text files the user has selected. After the app has finished reading those books, the user enters a word in the text field and presses the submit button, and this app displays a list of the next words and the probability. 
+First, user enters a length of window that scans the text files, and next, user presses the button "Select Books", and selects text files. Then, press the button "Read" on the panel to the right of main panel. The app starts reading the text files the user has selected. After the app has finished reading those books, the user enters word(s) in the text field and presses the submit button. This app displays a list of words or phrase that follow the word(s) and the probability.  
 
 <img src="images/ui1.jpeg" width="600">
 <img src="images/ui2.jpeg" width="600">
