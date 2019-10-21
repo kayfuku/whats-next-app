@@ -19,6 +19,8 @@ This app shows the phrases and its frequency that show up in the text files of y
     *Probability* = (The count of the next word) / (The sum of the counts of all the next words)
 
 * **Data Structure** stores every consecutive words in all the text files whose length is specified in Trie data structure. 
+<img src="images/trie_image.jpg" width="800">
+
 * **User Interface** provides a user with text field that the user type in a word and button that displays the result.  
 This runs in a separate thread from main thread. 
 
