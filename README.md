@@ -18,7 +18,9 @@ This app shows the phrases and its frequency that show up in the text files of y
 * **Text Analyzer** splits lines into words and keeps track of the count of the next word. It also computes the probability of the next word showing up. The probability is computed as the following.  
     *Probability* = (The count of the next word) / (The sum of the counts of all the next words)
 
-* **Data Structure** stores every consecutive words in all the text files whose length is specified in Trie data structure. 
+* **Data Structure** stores fixed length consecutive words in Trie data structure. Each Trie node has its own word and a hash map, where the key is the word and the value is the link to the next Trie node.  
+I use Trie because Trie performs better than hash map when it comes to finding all the words which have a common prefix.   
+
 <img src="images/trie_image.jpg" width="600">
 
 * **User Interface** provides a user with text field that the user type in a word and button that displays the result.  
