@@ -7,9 +7,10 @@ This app allows user to know the tendency of following words.
 When user types in a word, this app displays a list of words that follow the word and the probability of the word following based on a text file(s).   
 
 ## Example 
-If user types in "go", then a list of words as shown below will be displayed, which means a word "to" follows the word "go" with probability of 13.1 %, "and" follows "go" with probability of 8.5 %, and "on" follows "go" with probability of 6.0 % based on the 16 text files of your choice.  
+This app shows the phrases and its frequency that show up in the text files of your choice. User types in the length of the consecutive words and prefix word(s). The example below shows that there are 80 "take care of" in the 30 books text files, followed by 14 "take charge of", 12 "take off your", and so on.  
+  
 
-<img src="images/example1.jpg" width="800">
+<img src="images/example2.jpg" width="800">
 
 
 ## Design 
@@ -17,7 +18,7 @@ If user types in "go", then a list of words as shown below will be displayed, wh
 * **Text Analyzer** splits lines into words and keeps track of the count of the next word. It also computes the probability of the next word showing up. The probability is computed as the following.  
     *Probability* = (The count of the next word) / (The sum of the counts of all the next words)
 
-* **Data Structure** stores words, next words, and probability. 
+* **Data Structure** stores every consecutive words in all the text files whose length is specified in Trie data structure. 
 * **User Interface** provides a user with text field that the user type in a word and button that displays the result.  
 This runs in a separate thread from main thread. 
 
